@@ -1,7 +1,10 @@
-const router = require("express").Router();
+import express from "express";
+const router = express.Router();
+import user from "../model/user.js"
 
 router.get("/", (req, res) =>{
-    //TODO: implement endpoints for user
+    const users = user.findAll();
+    res.json(users);
 })
 
-module.exports = router;
+export default router;
