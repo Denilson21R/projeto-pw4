@@ -1,10 +1,17 @@
 import express from 'express'
+import bodyParser from "body-parser";
+
 const app = express();
 import db from "./db.js"
 
 import user from './routes/user.js'
 import recipe from './routes/recipe.js'
 import ingredient from './routes/ingredient.js'
+
+app.use(bodyParser.json())//support JSON-encoded bodies
+app.use(bodyParser.urlencoded({//support URL-encoded bodies
+    extended: true
+}));
 
 (async() => {
     await db.sync({force: true});

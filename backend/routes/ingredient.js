@@ -2,7 +2,7 @@ import express from "express";
 const router = express.Router();
 import {Ingredient} from "../model/index.js"
 
-router.get("/", async (req, res) => {
+router.post("/", async (req, res) => {
     const [ingredients] = await Ingredient.findAll();
     res.json(ingredients);
 })
