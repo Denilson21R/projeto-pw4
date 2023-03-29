@@ -1,8 +1,10 @@
 import express from "express";
 const router = express.Router();
+import ingredient from "../model/index.js"
 
 router.get("/", (req, res) =>{
-    //TODO: implement endpoints for ingredient
+    const ingredients = ingredient.findAll();
+    res.json(ingredients);
 })
 
 export default router;

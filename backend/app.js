@@ -6,9 +6,10 @@ import user from './routes/user.js'
 import recipe from './routes/recipe.js'
 import ingredient from './routes/ingredient.js'
 
-db.sync().then(()=>{
+(async() => {
+    await db.sync({force: true});
     console.log("Banco de dados conectado")
-});
+})();
 
 
 const port = 8080;

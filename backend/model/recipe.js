@@ -1,7 +1,7 @@
 import db from "../db.js";
 import {DataTypes} from "sequelize";
 
-export default db.define("Recipe",{
+const Recipe = db.define("Recipe",{
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -11,9 +11,6 @@ export default db.define("Recipe",{
         type: DataTypes.BOOLEAN,
         allowNull: false
     }
-
-    //hasMany ingredients
-    //hasOne userCreator
-
-    //TODO: implement -> recipe.belongsToMany(Ingredient, { through: "RecipeIngredient" })
 });
+
+export default Recipe;
