@@ -34,4 +34,4 @@ Ingredient.belongsToMany(Recipe, {
     through: "RecipeIngredient"
 })
 
-export default {User, Ingredient, Recipe}
+export {User, Ingredient, Recipe}

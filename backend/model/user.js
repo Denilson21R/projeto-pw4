@@ -1,7 +1,7 @@
 import {DataTypes} from "sequelize";
 import db from "../db.js";
 
-const User = db.define("User",{
+export default db.define("User",{
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -19,7 +19,9 @@ const User = db.define("User",{
     password: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    token: {
+        type: DataTypes.STRING,
+        unique: true
     }
 });
-
-export default User;

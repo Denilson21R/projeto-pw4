@@ -1,7 +1,7 @@
 import db from "../db.js";
 import {DataTypes} from "sequelize";
 
-const Ingredient = db.define("Ingredient", {
+export default db.define("Ingredient", {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -17,5 +17,3 @@ const Ingredient = db.define("Ingredient", {
         allowNull: false
     }
 })
-
-export default Ingredient;

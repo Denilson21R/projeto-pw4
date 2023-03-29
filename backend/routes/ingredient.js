@@ -1,10 +1,12 @@
 import express from "express";
 const router = express.Router();
-import ingredient from "../model/index.js"
+import {Ingredient} from "../model/index.js"
 
-router.get("/", (req, res) =>{
-    const ingredients = ingredient.findAll();
+router.get("/", async (req, res) => {
+    const [ingredients] = await Ingredient.findAll();
     res.json(ingredients);
 })
+
+//TODO: implement remaining endpoints
 
 export default router;

@@ -19,6 +19,8 @@ app.use("/user", user);
 app.use("/recipe", recipe);
 app.use("/ingredient", ingredient);
 
+//TODO: make project backend more complex(maybe add logs, more entities or other things)
+
 app.listen(port, function(){
     console.log(`Server running on port ${port}`);
 })

@@ -1,10 +1,12 @@
 import express from "express";
 const router = express.Router();
-import user from "../model/index.js"
+import {User} from "../model/index.js"
 
-router.get("/", (req, res) =>{
-    const users = user.findAll();
+router.get("/", async (req, res) => {
+    const [users] = await User.findAll()
     res.json(users);
 })
+
+//TODO: implement remaining endpoints with jwt auth
 
 export default router;
