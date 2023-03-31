@@ -14,10 +14,9 @@ app.use(bodyParser.urlencoded({//support URL-encoded bodies
 }));
 
 (async() => {
-    await db.sync({force: true});
-    console.log("Banco de dados conectado")
+    await db.sync();
+    console.log("Database connected")
 })();
-
 
 const port = 8080;
 
