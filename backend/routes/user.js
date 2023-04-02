@@ -7,17 +7,17 @@ const router = express.Router();
 
 //create user
 router.post("/", async (req, res) => {
-    if(userSignUpParamsNotNull(req)){
+    if(userFullParamsNotNull(req)){
         try{
-            bcrypt.hash(req.body.password, 10, async function (err, hash) {
+            bcrypt.hash(req.body.password, 10, async function (err, hash) { //TODO: move hash function to model with sequelize
                 const newUser = await createUser(req, hash)
-                res.status(201).json(newUser)
+                return res.status(201).json(userSafeData(newUser))
             })
         }catch (e) {
-            res.status(500) //server error
+            return res.status(500).json(e)
         }
     }else{
-        res.status(422).json({"error":"missing params"})
+        return res.status(422).json({error:"missing params"})
     }
 })
 
@@ -26,25 +26,26 @@ router.post("/auth", async (req, res)=>{
     if(userLoginParamsNotNull(req)){
         try{
             const user = await User.findOne({ where: { login: req.body.login }})
-            if (!userExist(user)) return res.status(401).json({ msg: "User not exist" }) //if user not exist than return status 401
-            bcrypt.compare(req.body.password, user.password, function (err, data){ //verify password
-                if(err){
-                    res.status(500).json(err)
-                }else if(data){
-                    crypto.randomBytes(48, function (err, buf){
-                        user.token = buf.toString("hex")
+            if (userExist(user)){
+                bcrypt.compare(req.body.password, user.password, function (err, data){
+                    if(err){
+                        return res.status(500).json(err)
+                    }else if(data){
+                        generateUserToken(user);
                         user.save()
-                        return res.status(200).json({ token: user.token }) //if success return token
-                    })
-                }else{
-                    return res.status(401).json({ msg: "Invalid credencial" }) //wrong password
-                }
-            })
+                        return res.status(200).json({ token: user.token })
+                    }else{
+                        return res.status(401).json({ message: "Invalid credencial" })
+                    }
+                })
+            }else{
+                return res.status(401).json({ message: "User not exist" })
+            }
         }catch (e) {
-            res.status(500) //server error
+            return res.status(500).json(e)
         }
     }else{
-        res.status(422).json({"error":"missing params"})
+        return res.status(422).json({ error:"missing params"})
     }
 })
 
@@ -52,16 +53,88 @@ router.post("/auth", async (req, res)=>{
 router.get("/:id", async (req, res) => {
     const userId = req.params.id
     try {
-        const user = await User.findByPk(userId)
+        const user = await User.findByPk(userId, { attributes: {exclude: ['password', 'token']}}) //TODO: return qty recipe and ingredient created
         if(userExist(user)){
-            return res.status(200).json(user) //success
+            return res.status(200).json(user)
         }else{
-            return res.status(404) //user not found
+            return res.status(404).json({ message: "user not found"})
         }
     } catch (e) {
-        res.status(500) //server error
+        return res.status(500).json(e)
     }
 })
+
+//update user data
+router.put("/:id", verifyToken, async (req, res) => {
+    try{
+        const user = await User.findByPk(req.params.id)
+        if (userExist(user)) {
+            if (userFullParamsNotNull(req)) {
+                updateUserData(user, req);
+                await user.save()
+                return res.status(200).json(userSafeData(user))
+            } else {
+                return res.status(422).json({ error: "missing params"})
+            }
+        } else {
+            return res.status(404).json({ message: "user not found"})
+        }
+    }catch (e) {
+        return res.status(500).json(e)
+    }
+})
+
+//delete user account
+router.delete("/:id", verifyToken, async (req, res) => {
+    try{
+        const user = await User.findByPk(req.params.id)
+        if(userExist(user)){
+            await user.destroy()
+            return res.status(200).json({success: true})
+        }else{
+            return res.status(404).json({ message: "user not found"})
+        }
+    }catch (e) {
+        return res.status(500).json(e)
+    }
+})
+
+async function verifyToken(req, res, next) {
+    const token = getTokenForAuthorizationHeader(req)
+    const user = await User.findByPk(req.params.id)
+    if (!token) {
+        return res.status(401).json({ auth: false, message: "token not informed"})
+    }else if (userExist(user)){
+        if(user.token === token){
+            next()
+        }else{
+            return res.status(401).json({ auth: false, message: "invalid token"})
+        }
+    }else{
+        return res.status(404).json({ message: "user not found"})
+    }
+}
+
+function getTokenForAuthorizationHeader(req) {
+    return req.headers.authorization.split(' ')[1]; //ignore first data passed in header
+}
+
+function userExist(user) {
+    return user != null && user instanceof User;
+}
+
+function userSafeData(user) {
+    return {
+        id: user.id,
+        name: user.name,
+        login: user.login
+    };
+}
+
+function generateUserToken(user) {
+    const buf = crypto.randomBytes(48)
+    user.token = buf.toString("hex")
+}
 
 async function createUser(req, hash) {
     return await User.create({
@@ -71,18 +144,20 @@ async function createUser(req, hash) {
     });
 }
 
-function userSignUpParamsNotNull(req) {
+function updateUserData(user, req) {
+    user.name = req.body.name
+    user.login = req.body.login
+    bcrypt.hash(req.body.password, 10, function(err, hash){
+        user.password = hash
+    })
+}
+
+function userFullParamsNotNull(req) {
     return req.body.name && req.body.login && req.body.password;
 }
 
 function userLoginParamsNotNull(req) {
     return req.body.login && req.body.password;
 }
-
-function userExist(user) {
-    return user != null && user instanceof User;
-}
-
-//TODO: implement remaining endpoints with jwt auth
 
 export default router;

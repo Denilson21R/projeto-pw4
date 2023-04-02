@@ -1,11 +1,11 @@
 ## Endpoints
 
 ### Usuário
+- **POST** - /user
 - **POST** - /user/auth
 - **GET** - /user/{id}
-- **POST** - /user
-- **PUT** - /user/{id} <token>
-- **DELETE** - /user/{id} <token>
+- **PUT** - /user/{id} <need auth token>
+- **DELETE** - /user/{id} <need auth token>
 
 ### Receita
 - **GET** - /recipe/{id}

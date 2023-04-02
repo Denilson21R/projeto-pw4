@@ -14,6 +14,7 @@ app.use(bodyParser.urlencoded({//support URL-encoded bodies
 }));
 
 (async() => {
+    //await db.sync({force: true}); //reset entire database
     await db.sync();
     console.log("Database connected")
 })();
