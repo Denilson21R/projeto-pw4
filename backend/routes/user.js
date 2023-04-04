@@ -2,50 +2,47 @@ import express from "express";
 import {User} from "../model/index.js"
 import bcrypt from "bcrypt"
 import * as crypto from 'crypto'
+import {verifyJWTToken} from './middleware.js'
 
 const router = express.Router();
 
 //create user
 router.post("/", async (req, res) => {
-    if(userFullParamsNotNull(req)){
-        try{
-            bcrypt.hash(req.body.password, 10, async function (err, hash) { //TODO: move hash function to model with sequelize
-                const newUser = await createUser(req, hash)
-                return res.status(201).json(userSafeData(newUser))
-            })
-        }catch (e) {
-            return res.status(500).json(e)
-        }
-    }else{
-        return res.status(422).json({error:"missing params"})
+    if (!userParamsNotNull(req))
+        return res.status(422).json({ error: "missing params"})
+
+    if (await userLoginExists(req))
+        return res.status(422).json({ error: "user login already exists"})
+
+    try{
+        await createUser(req)
+        return res.status(201).json({ success: "true"})
+    }catch (e) {
+        return res.status(500).json(e)
     }
 })
 
 //auth user
 router.post("/auth", async (req, res)=>{
-    if(userLoginParamsNotNull(req)){
-        try{
-            const user = await User.findOne({ where: { login: req.body.login }})
-            if (userExist(user)){
-                bcrypt.compare(req.body.password, user.password, function (err, data){
-                    if(err){
-                        return res.status(500).json(err)
-                    }else if(data){
-                        generateUserToken(user);
-                        user.save()
-                        return res.status(200).json({ token: user.token })
-                    }else{
-                        return res.status(401).json({ message: "Invalid credencial" })
-                    }
-                })
+    if(!userLoginParamsNotNull(req))
+        return res.status(422).json({ error: "missing params"})
+
+    try{
+        const user = await User.findOne({ where: { login: req.body.login }})
+        if (!userExist(user))
+            return res.status(401).json({ message: "User not found" })
+
+        bcrypt.compare(req.body.password, user.password, function (err, data){
+            if(data){
+                generateUserToken(user);
+                user.save()
+                return res.status(200).json({ token: user.token })
             }else{
-                return res.status(401).json({ message: "User not exist" })
+                return res.status(401).json({ message: "Invalid credencial" })
             }
-        }catch (e) {
-            return res.status(500).json(e)
-        }
-    }else{
-        return res.status(422).json({ error:"missing params"})
+        })
+    }catch (e) {
+        return res.status(500).json(e)
     }
 })
 
@@ -53,31 +50,29 @@ router.post("/auth", async (req, res)=>{
 router.get("/:id", async (req, res) => {
     const userId = req.params.id
     try {
-        const user = await User.findByPk(userId, { attributes: {exclude: ['password', 'token']}}) //TODO: return qty recipe and ingredient created
-        if(userExist(user)){
-            return res.status(200).json(user)
-        }else{
+        const user = await User.findByPk(userId, { attributes: {exclude: ['password', 'token']}}) //TODO: return qty recipe and ingredient created too
+        if(!userExist(user))
             return res.status(404).json({ message: "user not found"})
-        }
+
+        return res.status(200).json(user)
     } catch (e) {
         return res.status(500).json(e)
     }
 })
 
 //update user data
-router.put("/:id", verifyToken, async (req, res) => {
+router.put("/:id", verifyJWTToken, async (req, res) => {
     try{
         const user = await User.findByPk(req.params.id)
-        if (userExist(user)) {
-            if (userFullParamsNotNull(req)) {
-                updateUserData(user, req);
-                await user.save()
-                return res.status(200).json(userSafeData(user))
-            } else {
-                return res.status(422).json({ error: "missing params"})
-            }
-        } else {
+        if (!userExist(user))
             return res.status(404).json({ message: "user not found"})
+
+        if (userParamsNotNull(req)) {
+            updateUserData(user, req);
+            await user.save()
+            return res.status(200).json(userSafeData(user))
+        } else {
+            return res.status(422).json({ error: "missing params"})
         }
     }catch (e) {
         return res.status(500).json(e)
@@ -85,42 +80,26 @@ router.put("/:id", verifyToken, async (req, res) => {
 })
 
 //delete user account
-router.delete("/:id", verifyToken, async (req, res) => {
+router.delete("/:id", verifyJWTToken, async (req, res) => {
     try{
         const user = await User.findByPk(req.params.id)
-        if(userExist(user)){
-            await user.destroy()
-            return res.status(200).json({success: true})
-        }else{
+        if(!userExist(user))
             return res.status(404).json({ message: "user not found"})
-        }
+
+        await user.destroy()
+        return res.status(200).json({success: true})
     }catch (e) {
         return res.status(500).json(e)
     }
 })
 
-async function verifyToken(req, res, next) {
-    const token = getTokenForAuthorizationHeader(req)
-    const user = await User.findByPk(req.params.id)
-    if (!token) {
-        return res.status(401).json({ auth: false, message: "token not informed"})
-    }else if (userExist(user)){
-        if(user.token === token){
-            next()
-        }else{
-            return res.status(401).json({ auth: false, message: "invalid token"})
-        }
-    }else{
-        return res.status(404).json({ message: "user not found"})
-    }
-}
-
-function getTokenForAuthorizationHeader(req) {
-    return req.headers.authorization.split(' ')[1]; //ignore first data passed in header
-}
-
 function userExist(user) {
     return user != null && user instanceof User;
+}
+
+async function userLoginExists(req) {
+    const user = await User.findOne({where: {login: req.body.login}})
+    return userExist(user)
 }
 
 function userSafeData(user) {
@@ -136,12 +115,14 @@ function generateUserToken(user) {
     user.token = buf.toString("hex")
 }
 
-async function createUser(req, hash) {
-    return await User.create({
-        name: req.body.name,
-        login: req.body.login,
-        password: hash
-    });
+async function createUser(req) {
+    bcrypt.hash(req.body.password, 10, async function (err, hash) {
+        return await User.create({
+            name: req.body.name,
+            login: req.body.login,
+            password: hash
+        });
+    })
 }
 
 function updateUserData(user, req) {
@@ -152,7 +133,7 @@ function updateUserData(user, req) {
     })
 }
 
-function userFullParamsNotNull(req) {
+function userParamsNotNull(req) {
     return req.body.name && req.body.login && req.body.password;
 }
 
