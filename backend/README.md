@@ -21,3 +21,18 @@
 - **GET** - /ingredient/search/{name} <Retorna ingredientes com nome semelhante para uso na própria receita>
 - **POST** - /ingredient <token>
 - **PUT** - /ingredient/{id} <token>
+
+#### Curtida
+
+- **GET** - /reaction/likes/user/{id}
+- **GET** - /reaction/like/{id}
+- **POST** - /reaction/like
+- **DELETE** - /reaction/like/{id}
+
+#### Comentário
+
+- **GET** - /comments/user/{id}
+- **GET** - /comment/{id}
+- **POST** - /comment
+- **PUT** - /comment/{id}
+- **DELETE** - /comment/{id}

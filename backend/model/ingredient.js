@@ -15,5 +15,8 @@ export default db.define("Ingredient", {
     visible: { //other users can view and use in their recipes
         type: DataTypes.BOOLEAN,
         allowNull: false
+    },
+    nutritionalInformation: {
+        type: DataTypes.STRING,
     }
 })

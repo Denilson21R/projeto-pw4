@@ -16,6 +16,9 @@ export default db.define("User",{
         allowNull: false,
         unique: true
     },
+    biography:{
+        type: DataTypes.STRING,
+    },
     password: {
         type: DataTypes.STRING,
         allowNull: false

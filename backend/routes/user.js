@@ -8,7 +8,7 @@ const router = express.Router();
 
 //create user
 router.post("/", async (req, res) => {
-    if (!userParamsNotNull(req))
+    if (!userRequiredParamsNotNull(req))
         return res.status(422).json({ error: "missing params"})
 
     if (await userLoginExists(req))
@@ -24,7 +24,7 @@ router.post("/", async (req, res) => {
 
 //auth user
 router.post("/auth", async (req, res)=>{
-    if(!userLoginParamsNotNull(req))
+    if(!userRequiredParamsForLoginNotNull(req))
         return res.status(422).json({ error: "missing params"})
 
     try{
@@ -67,7 +67,7 @@ router.put("/:id", verifyJWTToken, async (req, res) => {
         if (!userExist(user))
             return res.status(404).json({ message: "user not found"})
 
-        if (userParamsNotNull(req)) {
+        if (userRequiredParamsNotNull(req)) {
             updateUserData(user, req);
             await user.save()
             return res.status(200).json(userSafeData(user))
@@ -106,7 +106,8 @@ function userSafeData(user) {
     return {
         id: user.id,
         name: user.name,
-        login: user.login
+        login: user.login,
+        biography: user.biography
     };
 }
 
@@ -133,11 +134,11 @@ function updateUserData(user, req) {
     })
 }
 
-function userParamsNotNull(req) {
+function userRequiredParamsNotNull(req) {
     return req.body.name && req.body.login && req.body.password;
 }
 
-function userLoginParamsNotNull(req) {
+function userRequiredParamsForLoginNotNull(req) {
     return req.body.login && req.body.password;
 }
 

@@ -7,6 +7,8 @@ import db from "./db.js"
 import user from './routes/user.js'
 import recipe from './routes/recipe.js'
 import ingredient from './routes/ingredient.js'
+import like from './routes/like.js'
+import comment from './routes/comment.js'
 
 app.use(bodyParser.json())//support JSON-encoded bodies
 app.use(bodyParser.urlencoded({//support URL-encoded bodies
@@ -14,8 +16,8 @@ app.use(bodyParser.urlencoded({//support URL-encoded bodies
 }));
 
 (async() => {
-    //await db.sync({force: true}); //reset entire database
-    await db.sync();
+    await db.sync({force: true}); //reset entire database
+    //await db.sync();
     console.log("Database connected")
 })();
 
@@ -25,8 +27,8 @@ const port = 8080;
 app.use("/user", user);
 app.use("/recipe", recipe);
 app.use("/ingredient", ingredient);
-
-//TODO: make project backend more complex(maybe add logs, more entities or other things)
+app.use("/like", like);
+app.use("/comment", comment);
 
 app.listen(port, function(){
     console.log(`Server running on port ${port}`);
