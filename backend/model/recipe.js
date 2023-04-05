@@ -1,7 +1,7 @@
 import db from "../db.js";
 import {DataTypes} from "sequelize";
 
-export default db.define("Recipe",{ //add dificuldade e info nutricionais
+export default db.define("Recipe",{
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,

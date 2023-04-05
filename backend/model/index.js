@@ -1,11 +1,15 @@
 import Ingredient from "./ingredient.js";
 import Recipe from "./recipe.js";
 import User from "./user.js";
-import db from "../db.js";
-import {DataTypes} from "sequelize";
+import Comment from "./comment.js";
+import Rating from "./rating.js";
 
 //user has many ingredients
 User.hasMany(Ingredient, {
+    foreignKey: "idUser"
+})
+Ingredient.belongsTo(User, {
+    constraint: true,
     foreignKey: "idUser"
 })
 
@@ -13,40 +17,33 @@ User.hasMany(Ingredient, {
 User.hasMany(Recipe, {
     foreignKey: "idUser"
 })
-
-//recipe has one user
 Recipe.belongsTo(User, {
     constraint: true,
     foreignKey: "idUser"
 })
 
-//ingredient has one user
-Ingredient.belongsTo(User, {
-    constraint: true,
-    foreignKey: "idUser"
-})
-
-//ingredient has many recipes
+//recipe has many ingredients
 Ingredient.belongsToMany(Recipe, {
     through: "RecipeIngredient"
 })
-
-//recipe has many ingredients
 Recipe.belongsToMany(Ingredient, {
     through: "RecipeIngredient"
 })
 
-const reactionUser = db.define('ReactionUser', {
-    text: DataTypes.STRING,
-    type: DataTypes.ENUM('LIKE', 'COMMENT')
-});
-
+//user comment in recipe
 User.belongsToMany(Recipe, {
-    through: reactionUser
+    through: Comment
 })
-
 Recipe.belongsToMany(User, {
-    through: reactionUser
+    through: Comment
 })
 
-export {User, Ingredient, Recipe, reactionUser}
+//user rating recipe
+User.belongsToMany(Recipe, {
+    through: Rating
+})
+Recipe.belongsToMany(User, {
+    through: Rating
+})
+
+export {User, Ingredient, Recipe, Comment, Rating}

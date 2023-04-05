@@ -22,17 +22,17 @@
 - **POST** - /ingredient <token>
 - **PUT** - /ingredient/{id} <token>
 
-#### Curtida
+#### Avaliação
 
-- **GET** - /reaction/likes/user/{id}
-- **GET** - /reaction/like/{id}
-- **POST** - /reaction/like
-- **DELETE** - /reaction/like/{id}
+- **GET** - /rating/user/{id}
+- **GET** - /rating/recipe/average/{id}
+- **POST** - /rating
+- **PUT** - /rating/{id}
+- **DELETE** - /rating/{id}
 
 #### Comentário
 
-- **GET** - /comments/user/{id}
-- **GET** - /comment/{id}
+- **GET** - /comment/user/{id}
 - **POST** - /comment
 - **PUT** - /comment/{id}
 - **DELETE** - /comment/{id}
