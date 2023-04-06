@@ -17,6 +17,6 @@ export default db.define("Ingredient", {
         allowNull: false
     },
     nutritionalInformation: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING
     }
 })

@@ -18,7 +18,7 @@
 
 #### Ingrediente
 - **GET** - /ingredient/{id}
-- **GET** - /ingredient/search/{name} <Retorna ingredientes com nome semelhante para uso na própria receita>
+- **GET** - /ingredient/search/name/{name} <Retorna ingredientes visiveis com nome semelhante para uso na própria receita>
 - **POST** - /ingredient <token>
 - **PUT** - /ingredient/{id} <token>
 

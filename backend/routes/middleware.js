@@ -2,7 +2,7 @@ import {User} from "../model/index.js";
 
 export async function verifyJWTToken(req, res, next) {
     const token = getTokenForAuthorizationHeader(req)
-    const user = await User.findByPk(req.params.id)
+    const user = await User.findOne({where: { token: token }})
     if (!token)
         return res.status(401).json({ auth: false, message: "token not informed"})
 
@@ -10,6 +10,7 @@ export async function verifyJWTToken(req, res, next) {
         return res.status(404).json({ message: "user not found"})
 
     if(user.token === token){
+        req.userId = user.id
         next()
     }else{
         return res.status(401).json({ auth: false, message: "invalid token"})

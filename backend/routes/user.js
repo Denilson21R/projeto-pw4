@@ -11,7 +11,7 @@ router.post("/", async (req, res) => {
     if (!userRequiredParamsNotNull(req))
         return res.status(422).json({ error: "missing params"})
 
-    if (await userLoginExists(req))
+    if (await userLoginAlreadyExists(req))
         return res.status(422).json({ error: "user login already exists"})
 
     try{
@@ -67,13 +67,12 @@ router.put("/:id", verifyJWTToken, async (req, res) => {
         if (!userExist(user))
             return res.status(404).json({ message: "user not found"})
 
-        if (userRequiredParamsNotNull(req)) {
-            updateUserData(user, req);
-            await user.save()
-            return res.status(200).json(userSafeData(user))
-        } else {
+        if (!userRequiredParamsNotNull(req))
             return res.status(422).json({ error: "missing params"})
-        }
+
+        updateUserData(user, req);
+        await user.save()
+        return res.status(200).json(userSafeData(user))
     }catch (e) {
         return res.status(500).json(e)
     }
@@ -97,7 +96,7 @@ function userExist(user) {
     return user != null && user instanceof User;
 }
 
-async function userLoginExists(req) {
+async function userLoginAlreadyExists(req) {
     const user = await User.findOne({where: {login: req.body.login}})
     return userExist(user)
 }
@@ -129,6 +128,7 @@ async function createUser(req) {
 function updateUserData(user, req) {
     user.name = req.body.name
     user.login = req.body.login
+    user.biography = req.body.biography
     bcrypt.hash(req.body.password, 10, function(err, hash){
         user.password = hash
     })
