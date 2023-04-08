@@ -33,3 +33,5 @@ app.use("/comment", comment);
 app.listen(port, function(){
     console.log(`Server running on port ${port}`);
 })
+
+//TODO: add pagination in all finder endpoints

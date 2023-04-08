@@ -1,7 +1,7 @@
 import express from "express";
 import {User} from "../model/index.js"
 import bcrypt from "bcrypt"
-import * as crypto from 'crypto'
+import * as crypto from 'crypto' //TODO: switch to no deprecated lib crypto-js and declare all used libs in readme
 import {verifyJWTToken} from './middleware.js'
 
 const router = express.Router();
@@ -50,7 +50,7 @@ router.post("/auth", async (req, res)=>{
 router.get("/:id", async (req, res) => {
     const userId = req.params.id
     try {
-        const user = await User.findByPk(userId, { attributes: {exclude: ['password', 'token']}}) //TODO: return qty recipe and ingredient created too
+        const user = await User.findByPk(userId, { attributes: {exclude: ['password', 'token']}})
         if(!userExist(user))
             return res.status(404).json({ message: "user not found"})
 
