@@ -28,7 +28,7 @@ export default db.define("Recipe",{
     },
     difficulty: {
         type: DataTypes.ENUM,
-        values: ['VERY EASY', 'EASY','NORMAL', 'HARD', 'VERY HARD'],
+        values: ['VERY EASY', 'EASY', 'NORMAL', 'HARD', 'VERY HARD'],
         defaultValue: 'NORMAL'
     }
 });

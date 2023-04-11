@@ -11,8 +11,8 @@
 - **GET** - /recipe/{id}
 - **GET** - /recipe <Retorna receitas com paginacao opcional>
 - **GET** - /recipe/search/{name} <Retorna receitas com nome semelhante>
+- **GET** - /recipe/user/{id} <Retorna as receitas do usuario>
 - **POST** - /recipe <token>
-- **GET** - /recipes/user/{id} <Retorna as receitas publicas do usuario>
 - **PUT** - /recipe/{id} <token>
 - **DELETE** - /recipe/{id} <token>
 
