@@ -2,7 +2,6 @@ import Ingredient from "./ingredient.js";
 import Recipe from "./recipe.js";
 import User from "./user.js";
 import Comment from "./comment.js";
-import Rating from "./rating.js";
 
 //user has many ingredients
 User.hasMany(Ingredient, {
@@ -38,12 +37,4 @@ Recipe.belongsToMany(User, {
     through: Comment
 })
 
-//user rating recipe
-User.belongsToMany(Recipe, {
-    through: Rating
-})
-Recipe.belongsToMany(User, {
-    through: Rating
-})
-
-export {User, Ingredient, Recipe, Comment, Rating}
+export {User, Ingredient, Recipe, Comment}

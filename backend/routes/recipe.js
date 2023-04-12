@@ -122,6 +122,10 @@ router.delete("/:id", verifyJWTToken, async(req, res) => {
     }
 })
 
+function recipeExist(recipe){
+    return recipe != null && recipe instanceof Recipe
+}
+
 function updateRecipeData(recipe, req) {
     recipe.name = req.body.name
     recipe.description = req.body.description
@@ -143,7 +147,7 @@ async function createRecipe(req) {
         preparationMode: req.body.preparationMode,
         nutritionalInformation: req.body.nutritionalInformation,
         difficulty: req.body.difficulty,
-        idUser: req.idUser
+        idUser: req.userId
     })
 }
 
@@ -160,8 +164,5 @@ function getPagination(req){
     return { limit, offset };
 }
 
-function recipeExist(recipe){
-    return recipe != null && recipe instanceof Recipe
-}
 
 export default router;
