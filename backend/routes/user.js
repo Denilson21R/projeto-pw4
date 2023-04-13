@@ -1,7 +1,7 @@
 import express from "express";
 import {User} from "../model/index.js"
 import bcrypt from "bcrypt"
-import * as crypto from 'crypto' //TODO: switch to no deprecated lib crypto-js and declare all used libs in readme
+import * as crypto from 'crypto'
 import {verifyJWTToken} from './middleware.js'
 
 const router = express.Router();
