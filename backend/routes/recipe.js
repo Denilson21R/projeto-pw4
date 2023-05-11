@@ -25,7 +25,7 @@ router.get("/:id", async (req, res) => {
     }
 })
 
-//get recipes with pagination
+//get recipes.js with pagination
 router.get("/", async(req, res) => {
     try{
         const { limit, offset } = getPagination(req); //can pass page and size parameters, default is page 0 and size 5
@@ -53,7 +53,7 @@ router.get("/search/name/:name", async(req, res) => {
     }
 })
 
-//get recipes by user
+//get recipes.js by user
 router.get("/user/:id", async(req, res) => {
     const userId = req.params.id
     try{

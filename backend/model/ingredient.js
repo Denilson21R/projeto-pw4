@@ -12,7 +12,7 @@ export default db.define("Ingredient", {
         unique: true,
         allowNull: false
     },
-    visible: { //other users can view and use in their recipes
+    visible: { //other users can view and use in their recipes.js
         type: DataTypes.BOOLEAN,
         allowNull: false
     },

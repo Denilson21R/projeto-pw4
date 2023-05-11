@@ -12,7 +12,7 @@ Ingredient.belongsTo(User, {
     foreignKey: "idUser"
 })
 
-//user has many recipes
+//user has many recipes.js
 User.hasMany(Recipe, {
     foreignKey: "idUser"
 })
