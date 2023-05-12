@@ -9,16 +9,19 @@ import {
 import Login from "./components/login";
 import Recipes from "./components/recipes";
 import Signup from "./components/signup";
+import Ingredients from "./components/ingredients";
 
-function App(props) {
+function App() {
   return (
       <>
           <Router>
               <Header/>
               <Routes>
-                  <Route path="/" element={<Recipes {...props}/>}></Route>
-                  <Route path="/login" element={<Login {...props}/>}></Route>
-                  <Route path="/signup" element={<Signup {...props}/>}></Route>
+                  <Route path="/" element={<Recipes/>}></Route>
+                  <Route path="/recipes" element={<Recipes/>}></Route>
+                  <Route path="/ingredients" element={<Ingredients/>}></Route>
+                  <Route path="/login" element={<Login/>}></Route>
+                  <Route path="/signup" element={<Signup/>}></Route>
               </Routes>
           </Router>
       </>
