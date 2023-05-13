@@ -1,13 +1,17 @@
 import express from 'express'
 import bodyParser from "body-parser";
+import cors from "cors";
 
 const app = express();
+
 import db from "./db.js"
 
 import user from './routes/user.js'
 import recipe from './routes/recipe.js'
 import ingredient from './routes/ingredient.js'
 import comment from './routes/comment.js'
+
+app.use(cors())
 
 app.use(bodyParser.json())//support JSON-encoded bodies
 app.use(bodyParser.urlencoded({//support URL-encoded bodies
@@ -20,7 +24,7 @@ app.use(bodyParser.urlencoded({//support URL-encoded bodies
     console.log("Database connected")
 })();
 
-const port = 8080;
+const port = 8080; //
 
 //importing routes
 app.use("/user", user);

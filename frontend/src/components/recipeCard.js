@@ -1,19 +1,19 @@
 export default function RecipeCard({ recipe }) {
     //TODO: improve design and use recipe data
     return (
-        <figure className="rounded-xl p-6 bg-gray-500">
-            <div className="pt-2 text-center space-y-4">
+        <figure className="rounded-2xl p-6 m-4 bg-gray-500">
+            <div className="p-2 text-center space-y-4">
                 <blockquote>
-                    <p className="text-xl text-white">
-                        Nome da receita
+                    <p className="text-xl text-white font-bold uppercase">
+                        {recipe.name}
                     </p>
                 </blockquote>
                 <figcaption>
                     <div className="font-medium">
-                        Dificuldade
+                        {recipe.difficulty}
                     </div>
                     <div className="text-white">
-                        Descrição
+                        {recipe.description}
                     </div>
                 </figcaption>
             </div>
