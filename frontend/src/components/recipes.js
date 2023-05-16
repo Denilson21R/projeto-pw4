@@ -17,8 +17,8 @@ export default function Recipes() {
 
     return (
         <div className="container mx-auto">
-            <div className="text-3xl font-bold mt-2">Receitas</div>
-            <div className="container grid grid-cols-4 p-4 m-4">{/*se as a quantidade de registros for impar, a quantidade de colunas tem que ser tambem*/}
+            <div className="text-3xl font-bold mt-4 ml-8">Receitas</div>
+            <div className="container grid grid-cols-4 p-3 m-3">{/*se as a quantidade de registros for impar, a quantidade de colunas tem que ser tambem*/}
                 {
                     recipes.map((recipe) => {
                             return (<RecipeCard recipe = {recipe} key={recipe.id}/>)

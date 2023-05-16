@@ -9,6 +9,7 @@ import Login from "./components/login";
 import Recipes from "./components/recipes";
 import Signup from "./components/signup";
 import Ingredients from "./components/ingredients";
+import Home from "./components/home";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
                   <Route path="/ingredients" element={<Ingredients/>}></Route>
                   <Route path="/login" element={<Login/>}></Route>
                   <Route path="/signup" element={<Signup/>}></Route>
+                  <Route path="/home" element={<Home/>}></Route>
               </Routes>
           </Router>
       </>

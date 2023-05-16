@@ -1,8 +1,11 @@
+import {apiUrl} from "../utils/config";
+
 export default function Login() {
     //TODO: implement login logic
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-            <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+            <div className="text-3xl font-bold mt-2 sm:mx-auto">Login</div>
+            <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
                 <form className="space-y-6" onSubmit={handleLogin}>
                     <div>
                         <label htmlFor="login" className="block text-sm font-medium leading-6 text-gray-900">
@@ -58,6 +61,19 @@ export default function Login() {
 }
 
 function handleLogin(event) {
-    alert("aqui foi")
     event.preventDefault()
+    apiUrl.post("/user/auth", {
+        login: event.target.login.value,
+        password: event.target.password.value
+    }).then(r => {
+        if(r.status === 200) {
+            saveUserDataInLocalStorage(r, event);
+            window.location.href = "/home"
+        }
+    })
+}
+
+function saveUserDataInLocalStorage(r, event) {
+    localStorage.setItem("token", r.data.token)
+    localStorage.setItem("login", event.target.login.value)
 }

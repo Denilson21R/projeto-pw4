@@ -2,7 +2,8 @@ export default function Signup() {
     //TODO: implement signup logic
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-            <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+            <div className="text-3xl font-bold mt-2 sm:mx-auto">Cadastrar-se</div>
+            <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
                 <form className="space-y-6" onSubmit={handleSignup}>
                     <div>
                         <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
@@ -83,6 +84,6 @@ export default function Signup() {
 }
 
 function handleSignup(event) {
-    alert("aqui foi")
+    //TODO: implement signup logic
     event.preventDefault()
 }
