@@ -1,14 +1,11 @@
-import {useLocation} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 
 export default function HeaderButton({keyName, href, ariaCurrent = undefined}){
     return(
         <>
-            <a key={keyName}
-                href={href}
-                className={getClass(useLocation().pathname, href)}
-                aria-current={ariaCurrent}>
+            <Link to={href} className={getClass(useLocation().pathname, href)} aria-current={ariaCurrent}>
                 {keyName}
-            </a>
+            </Link>
         </>
     )
 }

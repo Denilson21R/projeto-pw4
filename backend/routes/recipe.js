@@ -29,7 +29,7 @@ router.get("/:id", async (req, res) => {
 router.get("/", async(req, res) => {
     try{
         const { limit, offset } = getPagination(req); //can pass page and size parameters, default is page 0 and size 5
-        const recipes = await Recipe.findAndCountAll({offset: offset, limit: limit})
+        const recipes = await Recipe.findAndCountAll({offset: offset, limit: limit, include: [{model: User, attributes: {exclude: ['password', 'token', 'createdAt', 'updatedAt']}}]})
         return res.status(200).json(recipes)
     }catch (e){
         return res.status(500).json(e)

@@ -6,11 +6,11 @@ export default function Home(){
         redirect("/login")
     }
     return(
-        <>
-            <div>Home</div>
-            <div>
+        <div className="text-center">
+            <div className="font-bold text-3xl mt-3">Home</div>
+            <div className="mt-3">
                 <p>token: {token}</p>
             </div>
-        </>
+        </div>
     )
 }
