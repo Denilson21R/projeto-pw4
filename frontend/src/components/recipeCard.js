@@ -1,11 +1,11 @@
-import {Link, redirect, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 export default function RecipeCard({ recipe, user }) {
     //TODO: improve design
     return (
         <>
             <Link to={`/recipe/${recipe.id}`}>
-                <figure className="rounded-2xl p-6 m-4 bg-gray-500">
+                <figure className="rounded-2xl p-4 m-4 bg-gray-500">
                     <div className="p-2 text-center space-y-4">
                         <blockquote>
                             <p className="text-xl font-bold uppercase">

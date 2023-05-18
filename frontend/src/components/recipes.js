@@ -1,6 +1,7 @@
 import RecipeCard from "./recipeCard";
 import {apiUrl} from "../utils/config";
 import {useEffect, useState} from "react";
+import {Link} from "react-router-dom";
 
 export default function Recipes() {
     let [recipes, setRecipes] = useState([]);
@@ -35,6 +36,13 @@ export default function Recipes() {
                         placeholder="Pesquisar receita..."
                     />
                 </div>
+            </div>
+            <div className="mt-6 ml-8">
+                <Link to="/recipe/new">
+                    <button className="flex justify-center rounded-md bg-gray-900 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                        Nova receita
+                    </button>
+                </Link>
             </div>
             <div className="container grid grid-cols-4 p-3 mt-2">
                 {

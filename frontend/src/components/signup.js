@@ -1,5 +1,6 @@
+import {apiUrl} from "../utils/config";
+
 export default function Signup() {
-    //TODO: implement signup logic
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
             <div className="text-3xl font-bold mt-2 sm:mx-auto">Cadastrar-se</div>
@@ -30,7 +31,6 @@ export default function Signup() {
                                 name="email"
                                 type="email"
                                 autoComplete="email"
-                                required
                                 className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-stone-500 sm:text-sm sm:leading-6"
                             />
                         </div>
@@ -74,7 +74,7 @@ export default function Signup() {
                             type="submit"
                             className="flex w-full justify-center rounded-md bg-gray-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-stone-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
-                            Entrar
+                            Cadastrar
                         </button>
                     </div>
                 </form>
@@ -84,6 +84,25 @@ export default function Signup() {
 }
 
 function handleSignup(event) {
-    //TODO: implement signup logic
     event.preventDefault()
+
+    apiUrl.post('/user', {
+        name: event.target.name.value,
+        email: verifyEmail(event.target.email.value),
+        login: event.target.login.value,
+        password: event.target.password.value
+    }).then(response => {
+        if(response.status === 201){
+            //TODO: show success message
+            window.location.href = "/login"
+        }
+    })
+}
+
+function verifyEmail(email) {
+    if(email === '') {
+        return null
+    } else {
+        return email
+    }
 }

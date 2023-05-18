@@ -11,6 +11,7 @@ import Signup from "./components/signup";
 import Ingredients from "./components/ingredients";
 import Home from "./components/home";
 import Recipe from "./components/recipe";
+import NewRecipe from "./components/newRecipe";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
                   <Route path="/recipes" element={<Recipes/>}></Route>
                   <Route path="/recipe">
                       <Route path=":recipeId" element={<Recipe />} />
+                      <Route path="new" element={<NewRecipe />} />
                   </Route>
                   <Route path="/ingredients" element={<Ingredients/>}></Route>
                   <Route path="/login" element={<Login/>}></Route>
