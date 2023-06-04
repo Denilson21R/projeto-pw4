@@ -35,6 +35,7 @@
 - **DELETE** - /recipe/{id} <token>
 
 #### Ingrediente
+- **GET** - /ingredient
 - **GET** - /ingredient/{id}
 - **GET** - /ingredient/search/name/{name}
 - **POST** - /ingredient <token>

@@ -1,22 +1,8 @@
 import RecipeCard from "./recipeCard";
-import {apiUrl} from "../utils/config";
-import {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useLoaderData} from "react-router-dom";
 
 export default function Recipes() {
-    let [recipes, setRecipes] = useState([]);
-
-    useEffect(() => {
-        apiUrl.get("/recipe")
-            .then((response) => {
-                if(response.status === 200){
-                    recipes = setRecipes(response.data.rows)
-                }
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    }, []);
+    let recipes = useLoaderData();
 
     return (
         <div className="container mx-auto">
@@ -38,10 +24,8 @@ export default function Recipes() {
                 </div>
             </div>
             <div className="mt-6 ml-8">
-                <Link to="/recipe/new">
-                    <button className="flex justify-center rounded-md bg-gray-900 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                        Nova receita
-                    </button>
+                <Link to="/recipe/new" className="flex w-48 justify-center rounded-md bg-gray-900 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                    Nova receita
                 </Link>
             </div>
             <div className="container grid grid-cols-4 p-3 mt-2">
@@ -52,6 +36,7 @@ export default function Recipes() {
                     )
                 }
             </div>
+            {/*TODO: show message if there are no recipes*/}
         </div>
     )
 }

@@ -7,13 +7,13 @@ export default function Recipe(){
     let [ recipe, setRecipe ] = useState({});
     let [ userRecipe, setUserRecipe ] = useState({});
 
+    //TODO: change logic to use loaderData
     useEffect(() => {
         apiUrl.get("/recipe/" + recipeId)
             .then((response) => {
                 if(response.status === 200){
                     recipe = setRecipe(response.data)
                     userRecipe = setUserRecipe(response.data.User)
-                    //console.log(response.data)
                 }
             })
             .catch((err) => {

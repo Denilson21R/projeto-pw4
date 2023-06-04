@@ -31,6 +31,21 @@ router.get("/:id", async (req, res) => {
     }
 })
 
+//get all ingredients
+router.get("/", async (req, res) => {
+    try{
+        const ingredients = await Ingredient.findAll({
+            where: {
+                visible: true
+            }
+        })
+
+        return res.status(200).json(ingredients)
+    }catch (e) {
+        return res.status(500).json(e)
+    }
+})
+
 //update ingredient
 router.put("/:id", verifyJWTToken, async (req, res) => {
     const ingredientId = req.params.id;
