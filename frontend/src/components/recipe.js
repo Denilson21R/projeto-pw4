@@ -1,25 +1,10 @@
-import {useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
-import {apiUrl} from "../utils/config";
+import {useLoaderData} from "react-router-dom";
 
 export default function Recipe(){
-    let { recipeId } = useParams();
-    let [ recipe, setRecipe ] = useState({});
-    let [ userRecipe, setUserRecipe ] = useState({});
 
-    //TODO: change logic to use loaderData
-    useEffect(() => {
-        apiUrl.get("/recipe/" + recipeId)
-            .then((response) => {
-                if(response.status === 200){
-                    recipe = setRecipe(response.data)
-                    userRecipe = setUserRecipe(response.data.User)
-                }
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    }, []);
+    let data = useLoaderData();
+    let recipe = data.recipe;
+    let userRecipe = data.userRecipe;
 
     if(recipe) {
         return (

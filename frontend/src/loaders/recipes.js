@@ -13,4 +13,20 @@ async function getRecipesLoader() {
     return recipes;
 }
 
-export {getRecipesLoader};
+async function getRecipeLoader(id) {
+    let recipeData = null
+    await apiUrl.get(`/recipe/${id}`).then((response) => {
+        if(response.status === 200){
+            recipeData = {
+                recipe: response.data,
+                userRecipe : response.data.User
+            }
+        }
+    }).catch((err) => {
+        console.error(err);
+    });
+
+    return recipeData;
+}
+
+export {getRecipesLoader, getRecipeLoader};

@@ -74,7 +74,8 @@ router.post("/", verifyJWTToken, async(req, res) => {
         return res.status(422).json({ error: "missing params"})
 
     try{
-        await createRecipe(req)
+        const recipe = await createRecipe(req)
+        await recipe.addIngredients(req.body.ingredients)
         return res.status(201).json({ success: "true"})
     }catch (e) {
         return res.status(500).json(e)
@@ -147,12 +148,12 @@ async function createRecipe(req) {
         preparationMode: req.body.preparationMode,
         nutritionalInformation: req.body.nutritionalInformation,
         difficulty: req.body.difficulty,
-        idUser: req.userId
+        idUser: req.userId,
     })
 }
 
 function requiredParamsRecipeNotNull(req) {
-    return req.body.name && req.body.description && req.body.preparationTimeMinutes && req.body.preparationMode && req.body.difficulty && req.body.preparationTimeMinutes > 0
+    return req.body.ingredients && req.body.name && req.body.description && req.body.preparationTimeMinutes && req.body.preparationMode && req.body.difficulty && req.body.preparationTimeMinutes > 0
     && (req.body.difficulty === "VERY EASY" || req.body.difficulty === "EASY" || req.body.difficulty === "NORMAL" || req.body.difficulty === "HARD" || req.body.difficulty === "VERY HARD")
 }
 

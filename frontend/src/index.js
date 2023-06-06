@@ -13,7 +13,7 @@ import Signup from "./components/signup";
 import Home from "./components/home";
 import NewIngredient from "./components/newIngredient";
 import Ingredient from "./components/ingredient";
-import {getRecipesLoader} from "./loaders/recipes";
+import {getRecipeLoader, getRecipesLoader} from "./loaders/recipes";
 import {getIngredientsLoader} from "./loaders/ingredients";
 
 const router = createBrowserRouter([
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
             {path: "recipes", element: <Recipes />, loader: getRecipesLoader},
             {path: "recipe",
                 children: [
-                    {path: ":recipeId", element: <Recipe />},
+                    {path: ":recipeId", element: <Recipe />, loader: (params) => getRecipeLoader(params.params.recipeId)},
                     {path: "new", element: <NewRecipe />}
                 ]
             },
