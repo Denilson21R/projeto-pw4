@@ -6,6 +6,8 @@ export default function Recipe(){
     let recipe = data.recipe;
     let userRecipe = data.userRecipe;
 
+    console.log(data)
+
     if(recipe) {
         return (
             <div className="container mx-10 mt-12">

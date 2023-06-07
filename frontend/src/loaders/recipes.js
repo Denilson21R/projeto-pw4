@@ -14,7 +14,8 @@ async function getRecipesLoader() {
 }
 
 async function getRecipeLoader(id) {
-    let recipeData = null
+    let recipeData = {}
+
     await apiUrl.get(`/recipe/${id}`).then((response) => {
         if(response.status === 200){
             recipeData = {
@@ -28,5 +29,6 @@ async function getRecipeLoader(id) {
 
     return recipeData;
 }
+
 
 export {getRecipesLoader, getRecipeLoader};

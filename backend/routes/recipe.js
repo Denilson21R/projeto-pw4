@@ -4,7 +4,8 @@ import {Ingredient, Recipe, User} from "../model/index.js"
 import {Op} from "sequelize";
 import {verifyJWTToken} from "./middleware.js";
 
-const DEFAULT_PAGE_QTY = 5;
+const DEFAULT_PAGE_QTY = 30;
+//TODO: implement pagination in frontend
 
 //get recipe by id
 router.get("/:id", async (req, res) => {
@@ -25,7 +26,7 @@ router.get("/:id", async (req, res) => {
     }
 })
 
-//get recipes.js with pagination
+//get recipes with pagination
 router.get("/", async(req, res) => {
     try{
         const { limit, offset } = getPagination(req); //can pass page and size parameters, default is page 0 and size 5
@@ -45,7 +46,8 @@ router.get("/search/name/:name", async(req, res) => {
                 name: {
                     [Op.like]: `%${nameSearch}%`
                 }
-            }
+            },
+            include: User, attributes: {exclude: ['password', 'token', 'createdAt', 'updatedAt']}
         })
         return res.status(200).json(recipes)
     }catch (e) {
@@ -53,7 +55,7 @@ router.get("/search/name/:name", async(req, res) => {
     }
 })
 
-//get recipes.js by user
+//get recipes by user
 router.get("/user/:id", async(req, res) => {
     const userId = req.params.id
     try{

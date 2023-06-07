@@ -25,7 +25,7 @@ const router = createBrowserRouter([
             {path: "recipe",
                 children: [
                     {path: ":recipeId", element: <Recipe />, loader: (params) => getRecipeLoader(params.params.recipeId)},
-                    {path: "new", element: <NewRecipe />}
+                    {path: "new", element: <NewRecipe />, loader: getIngredientsLoader}
                 ]
             },
             {path: "ingredients", element: <Ingredients />, loader: getIngredientsLoader},

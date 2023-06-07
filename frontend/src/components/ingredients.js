@@ -45,20 +45,9 @@ export default function Ingredients(){
         </div>
     )
 
-    function requestAllIngredients() {
-        apiUrl.get(`/ingredient`)
-            .then((response) => {
-                if (response.status === 200) {
-                    setIngredients(response.data)
-                }
-            }).catch((error) => {
-                console.log(error)
-            })
-    }
-
     function handleSearchIngredient() {
         const searchIngredient = document.getElementById("searchIngredient").value
-        if(searchIngredient !== "" && searchIngredient != null) {
+        if(searchIngredient !== "") {
             requestSearchIngredient(searchIngredient);
         }else{
             requestAllIngredients();
@@ -72,7 +61,18 @@ export default function Ingredients(){
                     setIngredients(response.data)
                 }
             }).catch((error) => {
-                console.log(error)
-            })
+            console.log(error)
+        })
+    }
+
+    function requestAllIngredients() {
+        apiUrl.get(`/ingredient`)
+            .then((response) => {
+                if (response.status === 200) {
+                    setIngredients(response.data)
+                }
+            }).catch((error) => {
+            console.log(error)
+        })
     }
 }
