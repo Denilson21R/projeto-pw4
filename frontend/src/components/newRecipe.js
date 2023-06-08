@@ -10,7 +10,7 @@ export default function NewRecipe() {
         <div className="container mx-auto">
             <div className="font-bold text-3xl mt-6 ml-8">Nova Receita</div>
             <div className="mt-5 mx-10">
-                <form className="space-y-6" onSubmit={handleAddRecipe}>
+                <form className="space-y-2" onSubmit={handleAddRecipe}>
                     <div className="columns-2 gap-8">
                         <div>
                             <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
@@ -36,7 +36,7 @@ export default function NewRecipe() {
                                     id="difficulty"
                                     name="difficulty"
                                     autoComplete="difficulty"
-                                    className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                                    className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-stone-500 sm:max-w-xs sm:text-sm sm:leading-6"
                                 >
                                     <option value="NORMAL">Normal</option>
                                     <option value="VERY EASY">Muito fácil</option>
@@ -46,8 +46,7 @@ export default function NewRecipe() {
                                 </select>
                             </div>
                         </div>
-
-                        <div className="mt-5">
+                        <div className="mt-6">
                             <label htmlFor="preparationTimeMinutes" className="block text-sm font-medium leading-6 text-gray-900">
                                 Tempo de preparo (minutos)
                             </label>
@@ -62,31 +61,38 @@ export default function NewRecipe() {
                                 />
                             </div>
                         </div>
-                        <div>
+                        <div className="mt-10">
+                            <label htmlFor="description" className="block text-sm font-medium leading-6 text-gray-900">
+                                Descrição
+                            </label>
+                            <div>
+                                <textarea id="description" name="description" rows="1" className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-stone-500 sm:text-sm sm:leading-6" required></textarea>
+                            </div>
+                        </div>
+                        <div className="mt-3">
                             <label htmlFor="preparationMode" className="block text-sm font-medium leading-6 text-gray-900">
                                 Modo de preparo
                             </label>
                             <div className="mt-2">
-                                <textarea id="preparationMode" name="preparationMode" rows="3" className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required></textarea>
+                                <textarea id="preparationMode" name="preparationMode" rows="2" className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-stone-500 sm:text-sm sm:leading-6" required></textarea>
                             </div>
                         </div>
-                        <div className="">
-                            <label htmlFor="description" className="block text-sm font-medium leading-6 text-gray-900">
-                                Descrição
+                        <div className="mt-2">
+                            <label htmlFor="nutritionalInformation" className="block text-sm font-medium leading-6 text-gray-900">
+                                Informação nutricional
                             </label>
                             <div className="mt-2">
-                                <textarea id="description" name="description" rows="3" className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required></textarea>
+                                <textarea id="nutritionalInformation" name="nutritionalInformation" rows="1" className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-stone-500 sm:text-sm sm:leading-6"></textarea>
                             </div>
                         </div>
-                        {/*TODO: add nutritional information*/}
                     </div>
                     <div>
-                        <div className="mt-5">
+                        <div>
                             <label htmlFor="searchIngredients" className="block text-sm font-medium leading-6 text-gray-900">
                                 Ingredientes
                             </label>
-                            <div className="mt-3">
-                                <select onChange={handleChangeIngredient} id="searchIngredients" name="searchIngredients" autoComplete="searchIngredients" className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                            <div className="mt-2">
+                                <select onChange={handleChangeIngredient} id="searchIngredients" name="searchIngredients" autoComplete="searchIngredients" className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-stone-500 sm:max-w-xs sm:text-sm sm:leading-6">
                                     <option>Selecione um ingrediente</option>
                                     {ingredients.map((ingredient) => (
                                         <option key={ingredient.id} value={ingredient.id}>{ingredient.name}</option>
@@ -94,7 +100,7 @@ export default function NewRecipe() {
                                 </select>
                             </div>
                         </div>
-                        <div className="mt-3">
+                        <div className="mt-3 mb-5">
                             <label htmlFor="selectedIngredients" className="block text-sm font-medium leading-6 text-gray-900">
                                 Ingredientes selecionados
                             </label>
@@ -140,6 +146,7 @@ export default function NewRecipe() {
                 description: event.target.description.value,
                 preparationTimeMinutes: event.target.preparationTimeMinutes.value,
                 preparationMode: event.target.preparationMode.value,
+                nutritionalInformation: event.target.nutritionalInformation.value,
                 difficulty: event.target.difficulty.value,
                 ingredients: convertToArrayOfIds(selectedIngredients)
             }

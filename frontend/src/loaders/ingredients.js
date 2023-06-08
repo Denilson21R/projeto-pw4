@@ -13,4 +13,17 @@ async function getIngredientsLoader() {
     return ingredients;
 }
 
-export {getIngredientsLoader};
+async function getIngredientLoader(ingredientId) {
+    let ingredient = {};
+    await apiUrl.get("/ingredient/"+ingredientId).then((response) => {
+        if(response.status === 200){
+            ingredient = response.data
+        }
+    }).catch((err) => {
+        console.error(err);
+    });
+
+    return ingredient;
+}
+
+export {getIngredientsLoader, getIngredientLoader};

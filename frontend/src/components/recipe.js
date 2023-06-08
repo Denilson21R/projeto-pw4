@@ -1,14 +1,11 @@
 import {useLoaderData} from "react-router-dom";
 
 export default function Recipe(){
-
     let data = useLoaderData();
     let recipe = data.recipe;
     let userRecipe = data.userRecipe;
 
-    console.log(data)
-
-    if(recipe) {
+    if(recipe && userRecipe) {
         return (
             <div className="container mx-10 mt-12">
                 <div className="px-4 sm:px-0">

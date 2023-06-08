@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import {Ingredient} from "../model/index.js"
+import {Ingredient, User} from "../model/index.js"
 import {verifyJWTToken} from "./middleware.js";
 import {Op} from "sequelize";
 
@@ -21,7 +21,9 @@ router.post("/", verifyJWTToken, async (req, res) => {
 router.get("/:id", async (req, res) => {
     const ingredientId = req.params.id
     try{
-        const ingredient = await Ingredient.findByPk(ingredientId)
+        const ingredient = await Ingredient.findByPk(ingredientId, {
+            include: User, attributes: {exclude: ['password', 'token', 'createdAt', 'updatedAt']}
+        })
         if(!ingredientExists(ingredient))
             return res.status(404).json({ message: "ingredient not found"})
 
@@ -37,7 +39,8 @@ router.get("/", async (req, res) => {
         const ingredients = await Ingredient.findAll({
             where: {
                 visible: true
-            }
+            },
+            include: User, attributes: {exclude: ['password', 'token', 'createdAt', 'updatedAt']}
         })
 
         return res.status(200).json(ingredients)

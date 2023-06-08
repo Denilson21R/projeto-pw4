@@ -1,10 +1,12 @@
 import RecipeCard from "./recipeCard";
-import {Link, useLoaderData} from "react-router-dom";
+import {useLoaderData} from "react-router-dom";
 import {apiUrl} from "../utils/config";
 import {useState} from "react";
+import NewRecipeButton from "./newRecipeButton";
 
 export default function Recipes() {
     const [recipes, setRecipes] = useState(useLoaderData());
+
 
     return (
         <div className="container mx-auto">
@@ -26,15 +28,11 @@ export default function Recipes() {
                     />
                 </div>
             </div>
-            <div className="mt-6 ml-8">
-                <Link to="/recipe/new" className="flex w-48 justify-center rounded-md bg-gray-900 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                    Nova receita
-                </Link>
-            </div>
+            <NewRecipeButton/>
             <div className="container grid grid-cols-4 p-3 mt-2">
                 {
                     recipes.map((recipe) => {
-                            return (<RecipeCard recipe = {recipe} user={recipe.User}  key={recipe.id} />)
+                            return (<RecipeCard recipe = {recipe} user={recipe.User}  key={recipe.id} onDeleteRecipe={onDeleteRecipe} />)
                         }
                     )
                 }
@@ -72,5 +70,11 @@ export default function Recipes() {
             }).catch((error) => {
                 console.log(error)
             })
+    }
+
+    function onDeleteRecipe(recipeId) {
+        const newRecipes = recipes.filter(recipe => recipe.id !== recipeId)
+        setRecipes(newRecipes)
+        //TODO: show success message
     }
 }

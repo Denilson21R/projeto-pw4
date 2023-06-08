@@ -43,11 +43,9 @@ export default function NewIngredient() {
                             Informações nutricionais
                         </label>
                         <div className="mt-2">
-                            <textarea id="nutritionalInfo" name="nutritionalInfo" rows="3" className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required></textarea>
+                            <textarea id="nutritionalInfo" name="nutritionalInfo" rows="3" className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-stone-500 sm:text-sm sm:leading-6" required></textarea>
                         </div>
-                        <p className="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about yourself.</p>
                     </div>
-
                     <div>
                         <button
                             type="submit"
