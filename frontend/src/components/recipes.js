@@ -7,7 +7,6 @@ import NewRecipeButton from "./newRecipeButton";
 export default function Recipes() {
     const [recipes, setRecipes] = useState(useLoaderData());
 
-
     return (
         <div className="container mx-auto">
             <div className="mt-6 ml-8 grid grid-cols-2">

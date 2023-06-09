@@ -29,12 +29,12 @@ router.get("/recipe/:id", async(req, res) => {
     try{
         const comments = await Comment.findAll({
             where: {
-                RecipeId: recipeId
+                idRecipe: recipeId
             },
             include: [
                 {model: User, attributes: {exclude: ['password', 'token']}}
-            ],
-            attributes:{exclude: ['UserId', 'RecipeId']}
+            ]/*,
+            attributes:{exclude: ['UserId', 'RecipeId']}*/
         })
         return res.status(200).json(comments)
     }catch (e) {

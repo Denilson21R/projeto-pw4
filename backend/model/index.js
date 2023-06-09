@@ -29,12 +29,16 @@ Recipe.belongsToMany(Ingredient, {
     through: "RecipeIngredient"
 })
 
-//user comment in recipe
-User.belongsToMany(Recipe, {
-    through: Comment
+//comment have a user
+Comment.belongsTo(User, {
+    constraint: true,
+    foreignKey: "idUser"
 })
-Recipe.belongsToMany(User, {
-    through: Comment
+
+//comment have a recipe
+Comment.belongsTo(Recipe, {
+    constraint: true,
+    foreignKey: "idRecipe"
 })
 
 export {User, Ingredient, Recipe, Comment}
