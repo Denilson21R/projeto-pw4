@@ -61,8 +61,8 @@ export default function Ingredients(){
                     setIngredients(response.data)
                 }
             }).catch((error) => {
-            console.log(error)
-        })
+                console.log(error)
+            })
     }
 
     function requestAllIngredients() {
@@ -72,7 +72,7 @@ export default function Ingredients(){
                     setIngredients(response.data)
                 }
             }).catch((error) => {
-            console.log(error)
-        })
+                console.log(error)
+            })
     }
 }

@@ -13,8 +13,10 @@ import Signup from "./components/signup";
 import Home from "./components/home";
 import NewIngredient from "./components/newIngredient";
 import Ingredient from "./components/ingredient";
-import {getRecipeLoader, getRecipesLoader} from "./loaders/recipes";
+import {getRecipeLoader, getRecipesLoader, getUpdateRecipeLoader} from "./loaders/recipes";
 import {getIngredientLoader, getIngredientsLoader} from "./loaders/ingredients";
+import UpdateRecipe from "./components/updateRecipe";
+import UpdateIngredient from "./components/updateIngredient";
 
 const router = createBrowserRouter([
     {
@@ -26,7 +28,8 @@ const router = createBrowserRouter([
             {path: "recipe",
                 children: [
                     {path: ":recipeId", element: <Recipe />, loader: (params) => getRecipeLoader(params.params.recipeId)},
-                    {path: "new", element: <NewRecipe />, loader: getIngredientsLoader}
+                    {path: "new", element: <NewRecipe />, loader: getIngredientsLoader},
+                    {path: "edit/:recipeId", element: <UpdateRecipe />, loader: (params) => getUpdateRecipeLoader(params.params.recipeId)}
                 ]
             },
             {path: "ingredients", element: <Ingredients />, loader: getIngredientsLoader},
@@ -35,6 +38,7 @@ const router = createBrowserRouter([
                 children: [
                     {path: ":ingredientId", element: <Ingredient />, loader: (params) => getIngredientLoader(params.params.ingredientId)},
                     {path: "new", element: <NewIngredient/>},
+                    {path: "edit/:ingredientId", element: <UpdateIngredient/>, loader: (params) => getIngredientLoader(params.params.ingredientId)}
                 ]
             },
             {path: "login", element: <Login />},

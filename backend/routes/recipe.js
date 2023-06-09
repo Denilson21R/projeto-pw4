@@ -136,6 +136,7 @@ function updateRecipeData(recipe, req) {
     recipe.preparationMode = req.body.preparationMode
     recipe.nutritionalInformation = req.body.nutritionalInformation
     recipe.difficulty = req.body.difficulty
+    recipe.setIngredients(req.body.ingredients)
 }
 
 function userRequestIsRecipeOwner(recipe, req) {
