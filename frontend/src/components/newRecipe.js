@@ -108,7 +108,13 @@ export default function NewRecipe() {
                                 {/*TODO: on hover, show button to remove ingredient*/}
                                 <div className="mt-2 grid grid-cols-4 gap-8">
                                     {selectedIngredients.map((ingredientSelected) => (
-                                        <span key={ingredientSelected.id} className="inline-flex w-1/2 justify-center items-center rounded-md bg-blue-50 px-2 py-2 text-xs font-medium text-black ring-1 ring-inset ring-gray-500/10">
+                                        <span key={ingredientSelected.id} className="group gap-5 inline-flex w-1/2 justify-center items-center rounded-md bg-blue-50 px-2 py-2 text-xs font-medium text-black ring-1 ring-inset ring-gray-500/10">
+                                            <svg onClick={()=>{
+                                                setSelectedIngredients(selectedIngredients.filter((ingredient) => ingredient.id !== ingredientSelected.id))
+                                                ingredients.push(ingredientSelected)
+                                            }} className="w-4 h-4 hidden group-hover:block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
                                             {ingredientSelected.name}
                                         </span>
                                     ))}
