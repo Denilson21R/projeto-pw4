@@ -1,16 +1,24 @@
-export default function RecipeComments({idRecipe}) {
+export default function RecipeComments({commentList}) {
     return (
-        //TODO: FUI AO BANHEIRO JA VOLTO
-        <>
-            {/*TODO: verify if user is logged in and show comment form*/}
-            <div className="flex flex-col items-center justify-center mt-2 py-2">
-                <div className="flex flex-col justify-center items-center">
-                    <h1 className="text-2xl font-bold">Comentários da Receita {idRecipe}</h1>
-                    <div className="flex flex-col justify-center items-center">
-                        Lista de comentários
-                    </div>
-                </div>
-            </div>
-        </>
+        <div className="mx-10 mt-3">
+            <div className="font-bold text-1xl">Comentários</div>
+            <ul role="list" className="divide-y divide-gray-200">
+                {commentList.length > 0 ? (commentList.map((comment) => (
+                    <li key={comment.id} className="flex justify-between gap-x-6 py-5">
+                        <div className="flex gap-x-4">
+                            <div className="min-w-0 flex-auto">
+                                {/*TODO: add link to user page*/}
+                                <p className="text-sm font-semibold leading-6 text-gray-900">{comment.User.name}</p>
+                                <p className="mt-1 truncate text-xs leading-5 text-gray-500">{comment.text}</p>
+                            </div>
+                        </div>
+                    </li>
+                ))): (
+                    <span className="mt-3 inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+                        Nenhum comentário encontrado
+                    </span>
+                )}
+            </ul>
+        </div>
     )
 }

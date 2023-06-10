@@ -28,11 +28,6 @@ export default function Login() {
                             <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
                                 Senha
                             </label>
-                            <div className="text-sm">
-                                <a href="#" className="font-semibold text-gray-600 hover:text-stone-500">
-                                    Esqueceu a senha?
-                                </a>
-                            </div>
                         </div>
                         <div className="mt-2">
                             <input
@@ -68,7 +63,7 @@ function handleLogin(event) {
     }).then(r => {
         if(r.status === 200) {
             saveUserDataInLocalStorage(r, event);
-            window.location.href = "/home"
+            window.location.href = "/recipes"
         }
     })
 }

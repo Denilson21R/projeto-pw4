@@ -12,7 +12,7 @@ async function getRecipeLoader(id) {
     let recipeData = {}
 
     recipeData = await getRecipeData(id, recipeData);
-    recipeData = await getCommentsRecipe(id, recipeData);
+    recipeData = await getCommentsRecipe(id, recipeData, false);
     return recipeData;
 }
 
@@ -20,7 +20,7 @@ async function getUpdateRecipeLoader(id) {
     let recipeData = {}
 
     recipeData = await getRecipeData(id, recipeData);
-    recipeData = await getCommentsRecipe(id, recipeData);
+    recipeData = await getCommentsRecipe(id, recipeData, true);
     recipeData = await getAllIngredients(recipeData);
     return recipeData;
 }
@@ -50,10 +50,14 @@ async function getRecipeData(id, recipeData) {
     return recipeData;
 }
 
-async function getCommentsRecipe(id, recipeData) {
+async function getCommentsRecipe(id, recipeData, rows) {
     await apiUrl.get(`/comment/recipe/${id}`).then((response) => {
         if (response.status === 200) {
-            recipeData.comments = response.data.rows;
+            if(rows){
+                recipeData.comments = response.data.rows;
+            }else{
+                recipeData.comments = response.data;
+            }
         }
     }).catch((err) => {
         console.error(err);

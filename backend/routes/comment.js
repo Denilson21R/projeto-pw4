@@ -108,8 +108,8 @@ function requiredParamsToAddComment(req) {
 async function createComment(req) {
     return await Comment.create({
         text: req.body.text,
-        UserId: req.userId,
-        RecipeId: req.body.recipeId
+        idUser: req.userId,
+        idRecipe: req.body.recipeId
     })
 }
 

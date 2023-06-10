@@ -6,8 +6,10 @@ export default function Header() {
     let token = localStorage.getItem("token")
     let login = localStorage.getItem("login")
 
-    if(token === null){//not logged user
-        return (
+    /*TODO: detach in two components, one for logged in and one for not logged in*/
+    return (
+        <>
+        {token === null ? ( // if not logged in
             <nav className="bg-gray-600 bg">
                 <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
                     <div className="relative flex h-16 items-center justify-between">
@@ -23,16 +25,13 @@ export default function Header() {
                     </div>
                 </div>
             </nav>
-        );
-    }else{ //logged user
-        return (
+        ):( // if logged in
             <nav className="bg-gray-600">
                 <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
                     <div className="relative flex h-16 items-center justify-between">
                         <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-end">
                             <div className="hidden sm:ml-6 sm:block">
                                 <div className="flex space-x-4">
-                                    <HeaderButton keyName="Início" href="/home"/>
                                     <HeaderButton keyName="Receitas" href="/recipes"/>
                                     <HeaderButton keyName="Ingredientes" href="/ingredients"/>
                                     <Menu as="div" className="relative inline-block text-left">
@@ -68,8 +67,9 @@ export default function Header() {
                     </div>
                 </div>
             </nav>
-        );
-    }
+        )}
+        </>
+    )
 }
 
 function handleLogoff() {

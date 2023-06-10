@@ -29,14 +29,17 @@ export default function Recipes() {
             </div>
             <NewRecipeButton/>
             <div className="container grid grid-cols-4 p-3 mt-2">
-                {
-                    recipes.map((recipe) => {
-                            return (<RecipeCard recipe = {recipe} user={recipe.User}  key={recipe.id} onDeleteRecipe={onDeleteRecipe} />)
-                        }
+                { recipes.length > 0 ? (recipes.map((recipe) => (
+                    <RecipeCard recipe = {recipe} user={recipe.User}  key={recipe.id} onDeleteRecipe={onDeleteRecipe} />
+                    ))):(
+                        <>
+                            <span className="mt-3 inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+                                Nenhuma receita encontrada
+                            </span>
+                        </>
                     )
                 }
             </div>
-            {/*TODO: show message if there are no recipes*/}
         </div>
     )
 
@@ -64,7 +67,7 @@ export default function Recipes() {
         apiUrl.get(`/recipe`)
             .then((response) => {
                 if (response.status === 200) {
-                    setRecipes(response.data)
+                    setRecipes(response.data.rows)
                 }
             }).catch((error) => {
                 console.log(error)

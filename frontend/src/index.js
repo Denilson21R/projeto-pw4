@@ -10,7 +10,6 @@ import NewRecipe from "./components/newRecipe";
 import Ingredients from "./components/ingredients";
 import Login from "./components/login";
 import Signup from "./components/signup";
-import Home from "./components/home";
 import NewIngredient from "./components/newIngredient";
 import Ingredient from "./components/ingredient";
 import {getRecipeLoader, getRecipesLoader, getUpdateRecipeLoader} from "./loaders/recipes";
@@ -43,7 +42,6 @@ const router = createBrowserRouter([
             },
             {path: "login", element: <Login />},
             {path: "signup", element: <Signup />},
-            {path: "home", element: <Home />},
         ]
     },
 ]);

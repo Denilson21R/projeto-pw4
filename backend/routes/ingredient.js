@@ -81,7 +81,8 @@ router.get("/search/name/:name", async (req, res) => {
                     [Op.like]: `%${nameSearch}%`
                 },
                 visible: true
-            }
+            },
+            include: User, attributes: {exclude: ['password', 'token', 'createdAt', 'updatedAt']}
         })
         return res.status(200).json(ingredients)
     }catch (e){
