@@ -4,9 +4,6 @@ import {Ingredient, Recipe, User} from "../model/index.js"
 import {Op} from "sequelize";
 import {verifyJWTToken} from "./middleware.js";
 
-const DEFAULT_PAGE_QTY = 30;
-//TODO: implement pagination in frontend
-
 //get recipe by id
 router.get("/:id", async (req, res) => {
     const recipeId = req.params.id

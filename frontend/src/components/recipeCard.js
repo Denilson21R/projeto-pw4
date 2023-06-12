@@ -3,7 +3,6 @@ import {apiUrl} from "../utils/config";
 
 
 export default function RecipeCard({ recipe, user, onDeleteRecipe }) {
-    //TODO: improve design
     return (
         <>
             <Link to={`/recipe/${recipe.id}`}>

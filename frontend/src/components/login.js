@@ -1,7 +1,6 @@
 import {apiUrl} from "../utils/config";
 
 export default function Login() {
-    //TODO: implement login logic
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
             <div className="text-3xl font-bold mt-2 sm:mx-auto">Login</div>

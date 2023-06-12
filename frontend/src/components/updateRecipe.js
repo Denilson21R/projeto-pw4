@@ -110,7 +110,6 @@ export default function UpdateRecipe() {
                                     Ingredientes selecionados
                                 </label>
                                 <div>
-                                    {/*TODO: on hover, show button to remove ingredient*/}
                                     <div className="mt-2 grid grid-cols-4 gap-8">
                                         {ingredients.map((ingredientSelected) => (
                                             <span key={ingredientSelected.id} className="group inline-flex w-1/2 justify-center items-center rounded-md bg-blue-50 px-2 py-2 text-xs font-medium text-black ring-1 ring-inset ring-gray-500/10">

@@ -3,8 +3,10 @@ import {useLoaderData} from "react-router-dom";
 import {apiUrl} from "../utils/config";
 import {useState} from "react";
 import NewRecipeButton from "./newRecipeButton";
+import swal from "sweetalert";
 
 export default function Recipes() {
+    //TODO: verify if user is logged in and redirect to login page if not
     const [recipes, setRecipes] = useState(useLoaderData());
 
     return (
@@ -15,7 +17,6 @@ export default function Recipes() {
                     <label htmlFor="email-address" className="sr-only">
                         Pesquisar receita...
                     </label>
-                    {/*TODO: implement search recipe functionality*/}
                     <input
                         id="searchRecipe"
                         name="searchRecipe"
@@ -77,6 +78,6 @@ export default function Recipes() {
     function onDeleteRecipe(recipeId) {
         const newRecipes = recipes.filter(recipe => recipe.id !== recipeId)
         setRecipes(newRecipes)
-        //TODO: show success message
-    }
+        swal({ title: "Receita deletada com sucesso!", icon: "success"}).then(() => {})
+     }
 }

@@ -1,5 +1,6 @@
 import {useLoaderData, useParams} from "react-router-dom";
 import {apiUrl} from "../utils/config";
+import swal from "sweetalert";
 
 export default function UpdateIngredient() {
     const idIngredient = useParams().ingredientId;
@@ -75,7 +76,7 @@ export default function UpdateIngredient() {
         if(isUpdateIngredientFormOk(newIngredient)) {
             requestUpdateIngredient(newIngredient)
         }else{
-            //TODO: show error message
+            swal({"title": "Erro", "text": "Preencha todos os campos", "icon": "error"}).then (_ =>{})
         }
     }
 

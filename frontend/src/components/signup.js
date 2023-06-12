@@ -1,4 +1,5 @@
 import {apiUrl} from "../utils/config";
+import swal from "sweetalert";
 
 export default function Signup() {
     return (
@@ -93,8 +94,9 @@ function handleSignup(event) {
         password: event.target.password.value
     }).then(response => {
         if(response.status === 201){
-            //TODO: show success message
-            window.location.href = "/login"
+            swal("Sucesso!", "Usuário cadastrado com sucesso!", "success").then(() => {
+                window.location.href = "/login"
+            })
         }
     })
 }

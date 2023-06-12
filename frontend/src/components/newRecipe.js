@@ -1,6 +1,7 @@
 import {useLoaderData} from "react-router-dom";
 import {useState} from "react";
 import {apiUrl} from "../utils/config";
+import swal from "sweetalert";
 
 export default function NewRecipe() {
     let ingredients = useLoaderData();
@@ -105,7 +106,6 @@ export default function NewRecipe() {
                                 Ingredientes selecionados
                             </label>
                             <div>
-                                {/*TODO: on hover, show button to remove ingredient*/}
                                 <div className="mt-2 grid grid-cols-4 gap-8">
                                     {selectedIngredients.map((ingredientSelected) => (
                                         <span key={ingredientSelected.id} className="group gap-5 inline-flex w-1/2 justify-center items-center rounded-md bg-blue-50 px-2 py-2 text-xs font-medium text-black ring-1 ring-inset ring-gray-500/10">
@@ -158,7 +158,7 @@ export default function NewRecipe() {
             }
             requestAddRecipe(recipe);
         }else{
-            //TODO: show error message
+            swal("Oops!", "Preencha todos os campos!", "error").then(() => {})
         }
 
     }

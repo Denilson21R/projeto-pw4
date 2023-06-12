@@ -1,4 +1,5 @@
 import {apiUrl} from "../utils/config";
+import swal from "sweetalert";
 
 export default function NewIngredient() {
     return (
@@ -76,7 +77,7 @@ function handleAddIngredient(event) {
 
         requestAddIngredient(data);
     }else{
-        //TODO: show error in form message
+        swal("Erro", "Preencha todos os campos corretamente", "error").then(_ => {})
     }
 }
 
@@ -112,7 +113,7 @@ function requestAddIngredient(data) {
         if(response.status === 201){
             window.location.href = '/ingredients';
         }else{
-            //TODO: show error in request message
+            swal("Erro", "Não foi possível adicionar o ingrediente", "error").then(_ => {})
         }
     }).catch(error => {
         console.log(error);
